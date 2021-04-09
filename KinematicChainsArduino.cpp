@@ -6,7 +6,7 @@
  *      https://github.com/madhephaestus/ESPMutexDemo/blob/DSPTest/ESPMutexDemo.ino
  */
 
-#include "ESP32AnalogRead.h"
+#include "KinematicChainsArduino.h"
 
 ESP32AnalogRead::ESP32AnalogRead(int pinNum) {
 	if (!(pinNum < 0)) {
