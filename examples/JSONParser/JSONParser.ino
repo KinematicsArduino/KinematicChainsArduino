@@ -34,30 +34,7 @@ void setup() {
   // If you use another type of input, ArduinoJson must copy the strings from
   // the input to the JsonDocument, so you need to increase the capacity of the
   // JsonDocument.
-  char json[] ="\n"
-		  + "{\n"
-		  + "  \"Limbs_size\": 1,\n"
-		  + "  \"HephaestusArmLimbOne_DH_2\": [\n"
-		  + "    0.0,\n"
-		  + "    0.0,\n"
-		  + "    100.0,\n"
-		  + "    1.5707963267948966\n"
-		  + "  ],\n"
-		  + "  \"HephaestusArmLimbOne_DH_0\": [\n"
-		  + "    -1.5707963267948966,\n"
-		  + "    40.0,\n"
-		  + "    0.0,\n"
-		  + "    0.0\n"
-		  + "  ],\n"
-		  + "  \"LimbNames0\": \"HephaestusArmLimbOne\",\n"
-		  + "  \"HephaestusArmLimbOne_DH_1\": [\n"
-		  + "    0.0,\n"
-		  + "    0.0,\n"
-		  + "    100.0,\n"
-		  + "    -1.5707963267948966\n"
-		  + "  ],\n"
-		  + "  \"HephaestusArmLimbOne_size\": 3\n"
-		  + "}";
+  char json[] = "{  \"Limbs_size\": 1,  \"HephaestusArmLimbOne_DH_2\": [    0.0,    0.0,    100.0,    1.5707963267948966  ],  \"HephaestusArmLimbOne_DH_0\": [    -1.5707963267948966,    40.0,    0.0,    0.0  ],  \"LimbNames0\": \"HephaestusArmLimbOne\",  \"HephaestusArmLimbOne_DH_1\": [    0.0,    0.0,    100.0,    -1.5707963267948966  ],  \"HephaestusArmLimbOne_size\": 3}";
   DeserializationError error = deserializeJson(doc, json);
 
   // Test if parsing succeeds.
@@ -71,22 +48,62 @@ void setup() {
   //
   // Most of the time, you can rely on the implicit casts.
   // In other case, you can do doc["time"].as<long>();
-  int Limbs_size = doc["Limbs_size"];
+
+
+  int Limbs_size = doc.getMember("Limbs_size");
 
   // [Limb][link][parameter]
 
   for(int i = 0; i < Limbs_size;i++){
-	  char* LimbName = doc["LimbName"+String(i)];
+
+	  double limbRoot[4][4] = {
+			  	 {
+			  			 doc.getMember("limbRoot"+String(0)+String(0)),
+						 doc.getMember("limbRoot"+String(0)+String(1)),
+						 doc.getMember("limbRoot"+String(0)+String(2)),
+						 doc.getMember("limbRoot"+String(0)+String(3)),
+			  	 }
+			  	 ,{
+			  			 doc.getMember("limbRoot"+String(1)+String(0)),
+						 doc.getMember("limbRoot"+String(1)+String(1)),
+						 doc.getMember("limbRoot"+String(1)+String(2)),
+						 doc.getMember("limbRoot"+String(1)+String(3)),
+			  	 }
+			  	 ,{
+			  			 doc.getMember("limbRoot"+String(2)+String(0)),
+						 doc.getMember("limbRoot"+String(2)+String(1)),
+						 doc.getMember("limbRoot"+String(2)+String(2)),
+						 doc.getMember("limbRoot"+String(2)+String(3)),
+			  	 }
+			  	 ,{
+			  			 doc.getMember("limbRoot"+String(3)+String(0)),
+						 doc.getMember("limbRoot"+String(3)+String(1)),
+						 doc.getMember("limbRoot"+String(3)+String(2)),
+						 doc.getMember("limbRoot"+String(3)+String(3)),
+			  	 }
+	  };
+
+	  const char* LimbName = doc.getMember("LimbNames"+String(i));
 	  Serial.println("Limb name: "+String(LimbName));
-	  int Limb_size = doc[String(LimbName)+"_size"];
+	  int Limb_size = doc.getMember(String(LimbName)+"_size");
 	  Serial.println("Limb Size: "+String(Limb_size));
+
 	  for(int j = 0;j<Limb_size;j++){
 
-		  float* DH = doc[String(LimbName)+"_DH_"+j];
-		  Serial.println("Alpha: "+String(DH[0]));
-		  Serial.println("D: "+String(DH[1]));
-		  Serial.println("R: "+String(DH[2]));
-		  Serial.println("Theta: "+String(DH[3]));
+		  //float* DH = doc[String(LimbName)+"_DH_"+j];
+		  double DH_alpha = doc.getMember(String(LimbName)+"_DH_"+j)[0];
+		  double DH_d = doc.getMember(String(LimbName)+"_DH_"+j)[1];
+		  double DH_r = doc.getMember(String(LimbName)+"_DH_"+j)[2];
+		  double DH_theta = doc.getMember(String(LimbName)+"_DH_"+j)[3];
+		  Serial.println(String (j)+" Alpha: "+String(DH_alpha));
+		  Serial.println(String (j)+" D: "+String(DH_d));
+		  Serial.println(String (j)+" R: "+String(DH_r));
+		  Serial.println(String (j)+" Theta: "+String(DH_theta));
+
+		  //Serial.println("Alpha: "+String(DH[0]));
+		  //Serial.println("D: "+String(DH[1]));
+		  //Serial.println("R: "+String(DH[2]));
+		  //Serial.println("Theta: "+String(DH[3]));
 	  }
   }
 }
