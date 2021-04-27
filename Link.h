@@ -9,6 +9,10 @@
 #define LIBRARIES_KINEMATICCHAINSARDUINO_LINK_H_
 
 class Link {
+private:
+	int linkIndex;
+	float DHParameters[4];
+	int hardwareID;
 public:
 	Link();
 };

@@ -8,14 +8,20 @@
 #ifndef LIBRARIES_KINEMATICCHAINSARDUINO_LIMB_H_
 #define LIBRARIES_KINEMATICCHAINSARDUINO_LIMB_H_
 
-class Limb {
+#include "link.h"
+#include "IKSolver.h"
+#include <Geometry.h>
 
-}
-
 class Limb {
+private:
+	int limbIndex;
+	int numberOfLinks;
+	Link* links;
+	Transformation fiducialtoLimbRoot;
+	IKSolver ik;
+
 public:
 	Limb();
-	virtual ~Limb();
 };
 #endif /* LIBRARIES_KINEMATICCHAINSARDUINO_LIMB_H_ */
 

@@ -1,15 +1,14 @@
 /*
- * Limb.cpp
+ * hardwareManager.cpp
  *
  *  Created on: Apr 27, 2021
  *      Author: aksha
  */
 
-#include <Limb.h>
+#include <hardwareManager.h>
 
-Limb::Limb() {
+hardwareManager::hardwareManager() {
 	// TODO Auto-generated constructor stub
 
 }
-
 
