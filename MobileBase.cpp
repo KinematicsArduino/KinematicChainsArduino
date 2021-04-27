@@ -8,8 +8,22 @@
 
 #include "MobileBase.h"
 
-MobileBase::MobileBase(File* file, hardwareManager* hwptr){
+MobileBase::MobileBase(hardwareManager* hwptr){
+	hwLocal = hwptr;
 
 }
 
+void MobileBase::parse(File* file){
+
+}
+
+
+/*
+* Adds Limb to mobile base
+* @param limbPtr, a pointer to the new limb
+*/
+void MobileBase::addLimb(Limb* limbPtr){
+	limbs[numberOfLimbs] = limbPtr;
+	numberOfLimbs++;
+}
 

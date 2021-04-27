@@ -24,8 +24,24 @@ class MobileBase{
 		Transformation gndToFiducial;
 		hardwareManager* hwLocal;
 	public:
-		MobileBase(File* file, hardwareManager* hwptr);
 
+		/*
+		 * Constructor function
+		 * @param hwptr Pointer to the object that manages the actuators
+		 */
+		MobileBase(hardwareManager* hwptr);
+
+		/*
+		 * Parsing function, reads data from SD card and uses it to construct limbs
+		 * @param file File loaded from SD card that contains JSON file
+		 */
+		void parse(File* file);
+
+		/*
+		 * Adds Limb to mobile base
+		 * @param limbPtr, a pointer to the new limb
+		 */
+		void addLimb(Limb* limbPtr);
 
 };
 
