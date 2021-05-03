@@ -78,6 +78,9 @@ void MobileBase::parse(File* file){
 	 		  //add to link
 	 		  linkptr->addDH(DH);
 
+	 		  //add to limb array
+	 		  limb2make->addLinkPtr(linkptr,j);
+
 	 	  }
 	 	  addLimb(limb2make);
 	   }
