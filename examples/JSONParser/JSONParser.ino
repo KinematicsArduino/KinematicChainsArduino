@@ -7,6 +7,7 @@
 // https://arduinojson.org/v6/example/parser/
 
 #include <ArduinoJson.h>
+#include <Arduino.h>
 
 void setup() {
   // Initialize serial port
@@ -56,31 +57,24 @@ void setup() {
 
   for(int i = 0; i < Limbs_size;i++){
 
-	  double limbRoot[4][4] = {
-			  	 {
-			  			 doc.getMember("limbRoot"+String(0)+String(0)),
-						 doc.getMember("limbRoot"+String(0)+String(1)),
-						 doc.getMember("limbRoot"+String(0)+String(2)),
-						 doc.getMember("limbRoot"+String(0)+String(3)),
-			  	 }
-			  	 ,{
-			  			 doc.getMember("limbRoot"+String(1)+String(0)),
-						 doc.getMember("limbRoot"+String(1)+String(1)),
-						 doc.getMember("limbRoot"+String(1)+String(2)),
-						 doc.getMember("limbRoot"+String(1)+String(3)),
-			  	 }
-			  	 ,{
-			  			 doc.getMember("limbRoot"+String(2)+String(0)),
-						 doc.getMember("limbRoot"+String(2)+String(1)),
-						 doc.getMember("limbRoot"+String(2)+String(2)),
-						 doc.getMember("limbRoot"+String(2)+String(3)),
-			  	 }
-			  	 ,{
-			  			 doc.getMember("limbRoot"+String(3)+String(0)),
-						 doc.getMember("limbRoot"+String(3)+String(1)),
-						 doc.getMember("limbRoot"+String(3)+String(2)),
-						 doc.getMember("limbRoot"+String(3)+String(3)),
-			  	 }
+	  double limbRoot[16] = {
+
+			  			 doc.getMember("limbRoot"+"0"+"0"),
+						 doc.getMember("limbRoot"+"0"+"1"),
+						 doc.getMember("limbRoot"+"0"+"2"),
+						 doc.getMember("limbRoot"+"0"+"3"),
+			  			 doc.getMember("limbRoot"+"1"+"0"),
+						 doc.getMember("limbRoot"+"1"+"1"),
+						 doc.getMember("limbRoot"+"1"+"2"),
+						 doc.getMember("limbRoot"+"1"+"3"),
+			  			 doc.getMember("limbRoot"+"2"+"0"),
+						 doc.getMember("limbRoot"+"2"+"1"),
+						 doc.getMember("limbRoot"+"2"+"2"),
+						 doc.getMember("limbRoot"+"2"+"3"),
+			  			 doc.getMember("limbRoot"+"3"+"0"),
+						 doc.getMember("limbRoot"+"3"+"1"),
+						 doc.getMember("limbRoot"+"3"+"2"),
+						 doc.getMember("limbRoot"+"3"+"3")
 	  };
 
 	  const char* LimbName = doc.getMember("LimbNames"+String(i));

@@ -11,6 +11,7 @@
 class hardwareManager {
 public:
 	hardwareManager();
+	void initHardware(Link* Link);
 };
 
 #endif /* LIBRARIES_KINEMATICCHAINSARDUINO_HARDWAREMANAGER_H_ */
