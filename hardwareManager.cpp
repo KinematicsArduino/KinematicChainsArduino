@@ -12,3 +12,6 @@ hardwareManager::hardwareManager() {
 
 }
 
+void hardwareManager::initHardware(Link* link){
+
+}

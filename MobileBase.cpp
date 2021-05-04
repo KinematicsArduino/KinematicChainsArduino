@@ -22,7 +22,7 @@ void MobileBase::parse(File* file){
 
 		StaticJsonDocument<500> doc;
 
-	  DeserializationError error = deserializeJson(doc, file);
+	  DeserializationError error = deserializeJson(doc, file[0]);
 	  if (error) {
 	      Serial.print(F("deserializeJson() failed: "));
 	      Serial.println(error.f_str());
@@ -31,7 +31,7 @@ void MobileBase::parse(File* file){
 	  int Limbs_size = doc.getMember("Limbs_size");
 	  for(int i = 0; i < Limbs_size;i++){
 
-		  Limb* limb2make = new Limb;
+		  Limb* limb2make = new Limb();
 		  limb2make->addIndex(i);
 		  //Define LimbRoot transformation
 	 	  double limbRoot[16];
@@ -64,7 +64,7 @@ void MobileBase::parse(File* file){
 	 	  int Limb_size = doc.getMember(String(LimbName)+"_size");
 	 	  limb2make->addSize(Limb_size);
 	 	  for(int j = 0;j<Limb_size;j++){
-	 		  Link* linkptr = new Link;
+	 		  Link* linkptr = new Link();
 	 		  linkptr->addIndex(j);
 
 	 		  //Getting DH parameters
