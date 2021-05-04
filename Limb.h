@@ -18,6 +18,7 @@ class Limb {
 private:
 	int limbIndex;
 	int numberOfLinks;
+	const char* limbName;
 	Link* links[maxLinks];
 	Transformation fiducialtoLimbRoot;
 	IKSolver ik;

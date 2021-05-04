@@ -17,6 +17,7 @@ public:
 	Link();
 	void addIndex(int index);
 	void addDH(double* DH);
+	void addHardwareID(int ID);
 };
 
 #endif /* LIBRARIES_KINEMATICCHAINSARDUINO_LINK_H_ */

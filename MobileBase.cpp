@@ -13,6 +13,11 @@ MobileBase::MobileBase(hardwareManager* hwptr){
 
 }
 
+
+/*
+*	reads the SD card configuration file and initializes Mobile base off of it.
+* @param file, the JSON config file
+*/
 void MobileBase::parse(File* file){
 
 		StaticJsonDocument<500> doc;
@@ -29,27 +34,26 @@ void MobileBase::parse(File* file){
 		  Limb* limb2make = new Limb;
 		  limb2make->addIndex(i);
 		  //Define LimbRoot transformation
-	 	  double limbRoot[16] = {
+	 	  double limbRoot[16];
+		 	 limbRoot[0]=doc.getMember("limbRoot00");
+		 	 limbRoot[1]=doc.getMember("limbRoot01");
+		 	 limbRoot[2]=doc.getMember("limbRoot02");
+		 	 limbRoot[3]=doc.getMember("limbRoot03");
 
-	 			  			 doc.getMember("limbRoot"+"0"+"0"),
-	 						 doc.getMember("limbRoot"+"0"+"1"),
-	 						 doc.getMember("limbRoot"+"0"+"2"),
-	 						 doc.getMember("limbRoot"+"0"+"3"),
-	 			  			 doc.getMember("limbRoot"+"1"+"0"),
-	 						 doc.getMember("limbRoot"+"1"+"1"),
-	 						 doc.getMember("limbRoot"+"1"+"2"),
-	 						 doc.getMember("limbRoot"+"1"+"3"),
-	 			  			 doc.getMember("limbRoot"+"2"+"0"),
-	 						 doc.getMember("limbRoot"+"2"+"1"),
-	 						 doc.getMember("limbRoot"+"2"+"2"),
-	 						 doc.getMember("limbRoot"+"2"+"3"),
-	 			  			 doc.getMember("limbRoot"+"3"+"0"),
-	 						 doc.getMember("limbRoot"+"3"+"1"),
-	 						 doc.getMember("limbRoot"+"3"+"2"),
-	 						 doc.getMember("limbRoot"+"3"+"3")
-	 	  };
+		 	 limbRoot[4]=doc.getMember("limbRoot10");
+		 	 limbRoot[5]=doc.getMember("limbRoot11");
+		 	 limbRoot[6]=doc.getMember("limbRoot12");
+		 	 limbRoot[7]=doc.getMember("limbRoot13");
 
+		 	 limbRoot[8]=doc.getMember("limbRoot20");
+		 	 limbRoot[9]=doc.getMember("limbRoot21");
+		 	 limbRoot[10]=doc.getMember("limbRoot22");
+		 	 limbRoot[11]=doc.getMember("limbRoot23");
 
+		 	 limbRoot[12]=doc.getMember("limbRoot30");
+		 	 limbRoot[13]=doc.getMember("limbRoot31");
+		 	 limbRoot[14]=doc.getMember("limbRoot32");
+		 	 limbRoot[15]=doc.getMember("limbRoot33");
 	 	  	  //Add transformation to limb pointer
 	 	  //limb2make->addTransformation(limbRoot);
 
