@@ -43,6 +43,7 @@ class MobileBase{
 		 */
 		void addLimb(Limb* limbPtr);
 
+		void FKofLimb(Transformation* Result, int index);
 };
 
 
