@@ -12,6 +12,6 @@ hardwareManager::hardwareManager() {
 
 }
 
-void hardwareManager::initHardware(Link* link){
-
+float hardwareManager::getCurrentValue(int Pin){
+	return 0;
 }

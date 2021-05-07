@@ -7,52 +7,26 @@
 
 #include <Limb.h>
 
-Limb::Limb() {
-	// TODO Auto-generated constructor stub
+Limb::Limb(int index, const char* Name, Transformation* limbRoot, hardwareManager* hwptr){
 
-}
-
-/*
-* Updates the index value
-* @param index, the index of the limb in mobile base
-*/
-void Limb::addIndex(int index){
 	limbIndex = index;
+	fiducialtoLimbRoot = limbRoot;
+	limbName = Name;
+	hwLocal = hwptr;
 }
-
 
 /*
 * Adds a link pointer to the link pointer array
 * @param linkPTR, pointer to the link to add
 * @param index, the index that the pointer is at
 */
-void Limb::addLinkPtr(Link* linkPTR, int index){
-	links[index] = linkPTR;
+void Limb::addLinkPtr(Link* linkPTR){
+	links[numberOfLinks++] = linkPTR;
 }
 
-
-/*
-* Updates the name value
-* @param Name, the name of the limb
-*/
-void Limb::addName(const char* Name){
-	limbName = Name;
+void Limb::FK(Transformation* GlobalTransform){
+	GlobalTransform[0]*=fiducialtoLimbRoot[0];
+	for(int i = 0; i < numberOfLinks; i++){
+		links[i]->computeStep(GlobalTransform);
+	}
 }
-
-
-/*
-* Updates the size value
-* @param size, the size of the link array
-*/
-void Limb::addSize(int size){
-	numberOfLinks = size;
-}
-
-/*
-* Updates the Transformation value
-* @param limbRoot, the size of the link array
-*/
-void Limb::addTransformation(Transformation limbRoot){
-	fiducialtoLimbRoot = limbRoot;
-}
-

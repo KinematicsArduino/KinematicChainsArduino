@@ -17,21 +17,17 @@
 class Limb {
 private:
 	int limbIndex;
-	int numberOfLinks;
+	int numberOfLinks = 0;
 	const char* limbName;
 	Link* links[maxLinks];
-	Transformation fiducialtoLimbRoot;
+	Transformation* fiducialtoLimbRoot;
 	IKSolver ik;
+	hardwareManager* hwLocal;
 
 public:
-	Limb();
-	void addIndex(int index);
-	void addName(const char* Name);
-	void addSize(int size);
-	void addTransformation(Transformation limbRoot);
-	//void addTransformation(double limbRoot[16]);
-		//possibly have the transformation be passed as an array and converted in function
-	void addLinkPtr(Link* linkPTR, int index);
+	Limb(int index, const char* Name, Transformation* limbRoot, hardwareManager* hwptr);
+	void addLinkPtr(Link* linkPTR);
+	void FK(Transformation* GlobalTransform);
 
 };
 #endif /* LIBRARIES_KINEMATICCHAINSARDUINO_LIMB_H_ */

@@ -7,20 +7,28 @@
 
 #include <Link.h>
 
-Link::Link() {
-	// TODO Auto-generated constructor stub
+Link::Link(int index, float DH_alpha, float DH_d, float DH_r, float DH_theta, int ID, hardwareManager* hwptr, float scale, float offset){
+	linkIndex = index;
+	DH_Alpha = DH_alpha;
+	DH_D = DH_d;
+	DH_R = DH_r;
+	DH_Theta = DH_theta;
 
+	Offset = offset;
+	ScaleActuator = scale;
+	hwLocal = hwptr;
+	hardwarePin = ID;
 }
 
-void Link::addIndex(int index){
-	linkIndex =  index;
+float Link::getAngle(){
+	return ScaleActuator*(hwLocal->getCurrentValue(hardwarePin)-Offset);
 }
-void Link::addDH(double* DH){
-	for(int i = 0; i < 4; i++){
-		DHParameters[i] =DH[i];
-	}
 
+
+void Link::computeStep(Transformation* pose){
+	 pose->RotateX(DH_Alpha);
+	 pose->Translate(DH_R,0,0);
+	 pose->Translate(0,0,DH_D);
+	 pose->RotateZ(DH_Theta);
 }
-void Link::addHardwareID(int ID){
-	hardwareID = ID;
-}
+

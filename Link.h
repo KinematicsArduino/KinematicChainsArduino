@@ -7,17 +7,29 @@
 
 #ifndef LIBRARIES_KINEMATICCHAINSARDUINO_LINK_H_
 #define LIBRARIES_KINEMATICCHAINSARDUINO_LINK_H_
+#include "hardwareManager.h"
+#include <Geometry.h>
 
 class Link {
 private:
 	int linkIndex;
-	float DHParameters[4];
-	int hardwareID;
+	float DH_Alpha;
+	float DH_D;
+	float DH_R;
+	float DH_Theta;
+
+	float ScaleActuator;
+	float Offset;
+
+	hardwareManager* hwLocal;
+	int hardwarePin;
 public:
-	Link();
-	void addIndex(int index);
-	void addDH(double* DH);
-	void addHardwareID(int ID);
+	Link(int index, float DH_alpha, float DH_d, float DH_R, float DH_Theta, int ID, hardwareManager* hwptr, float ScaleActuator, float Offset);
+	/*
+	 * getAngle returns angle of link in degrees
+	 */
+	float getAngle();
+	void computeStep(Transformation* pose);
 };
 
 #endif /* LIBRARIES_KINEMATICCHAINSARDUINO_LINK_H_ */
