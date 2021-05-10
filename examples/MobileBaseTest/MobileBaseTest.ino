@@ -7,15 +7,13 @@
 
 hardwareManager hw;
 MobileBase Robot(&hw);
-String filename = "config.json";
 void setup(){
 
 	Serial.begin(115200);
 	Serial.println("Starting mobile base test");
 
 	// Open file for reading
-	  File file = SD.open(filename.c_str());
-	  Robot.parse(file);
+	  Robot.parse();
 
 	  BLA::Matrix<4,4> Result = BLA::Identity<4,4>();
 	  Robot.FKofLimb(Result, 0);
