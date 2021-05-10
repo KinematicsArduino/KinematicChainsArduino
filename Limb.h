@@ -20,14 +20,14 @@ private:
 	int numberOfLinks = 0;
 	const char* limbName;
 	Link* links[maxLinks];
-	Transformation* fiducialtoLimbRoot;
+	Matrix<4,4> fiducialtoLimbRoot;
 	IKSolver ik;
 	hardwareManager* hwLocal;
 
 public:
-	Limb(int index, const char* Name, Transformation* limbRoot, hardwareManager* hwptr);
+	Limb(int index, const char* Name, Matrix<4,4> limbRoot, hardwareManager* hwptr);
 	void addLinkPtr(Link* linkPTR);
-	void FK(Transformation* GlobalTransform);
+	void FK(Matrix<4,4> &GlobalTransform);
 
 };
 #endif /* LIBRARIES_KINEMATICCHAINSARDUINO_LIMB_H_ */

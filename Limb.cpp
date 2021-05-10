@@ -7,7 +7,7 @@
 
 #include <Limb.h>
 
-Limb::Limb(int index, const char* Name, Transformation* limbRoot, hardwareManager* hwptr){
+Limb::Limb(int index, const char* Name, Matrix<4,4> limbRoot, hardwareManager* hwptr){
 
 	limbIndex = index;
 	fiducialtoLimbRoot = limbRoot;
@@ -24,8 +24,8 @@ void Limb::addLinkPtr(Link* linkPTR){
 	links[numberOfLinks++] = linkPTR;
 }
 
-void Limb::FK(Transformation* GlobalTransform){
-	GlobalTransform[0]*=fiducialtoLimbRoot[0];
+void Limb::FK(Matrix<4,4> &GlobalTransform){
+	GlobalTransform*=fiducialtoLimbRoot;
 	for(int i = 0; i < numberOfLinks; i++){
 		links[i]->computeStep(GlobalTransform);
 	}

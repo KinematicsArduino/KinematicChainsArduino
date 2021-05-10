@@ -41,17 +41,12 @@ void MobileBase::parse(File* file){
 	 	}
 
 
-	 	Transformation* limbRootTR = new Transformation();
-	 	limbRootTR->R = limbRoot.Submatrix(Slice<0,3>(),Slice<0,3>());
-	 	limbRootTR->p = limbRoot.Submatrix(Slice<0,3>(),Slice<3,4>());
-
-
 
 
 
 	 	  const char* LimbName = doc.getMember("LimbNames"+String(i));
 	 	  int Limb_size = doc.getMember(String(LimbName)+"_size");
-	 	 Limb* limb2make = new Limb(1, LimbName, limbRootTR, hwLocal);
+	 	 Limb* limb2make = new Limb(1, LimbName, limbRoot, hwLocal);
 	 	  for(int j = 0;j<Limb_size;j++){
 
 	 		  //Getting DH parameters
@@ -85,9 +80,9 @@ void MobileBase::addLimb(Limb* limbPtr){
 }
 
 
-void MobileBase::FKofLimb(Transformation* Result, int index){
+void MobileBase::FKofLimb(Matrix<4,4> &Result, int index){
 	if(index>= numberOfLimbs) return;
-	Result[0]*=gndToFiducial[0];
+	Result = gndToFiducial;
 	limbs[index]->FK(Result);
 }
 

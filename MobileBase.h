@@ -21,7 +21,7 @@ class MobileBase{
 	private:
 		int numberOfLimbs = 0;
 		Limb* limbs[MaxLimbs];
-		Transformation gndToFiducial;
+		Matrix<4,4> gndToFiducial;
 		hardwareManager* hwLocal;
 	public:
 
@@ -43,7 +43,7 @@ class MobileBase{
 		 */
 		void addLimb(Limb* limbPtr);
 
-		void FKofLimb(Transformation* Result, int index);
+		void FKofLimb(Matrix<4,4> &Result, int index);
 };
 
 

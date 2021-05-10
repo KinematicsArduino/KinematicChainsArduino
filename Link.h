@@ -29,7 +29,7 @@ public:
 	 * getAngle returns angle of link in degrees
 	 */
 	float getAngle();
-	void computeStep(Transformation* pose);
+	void computeStep(Matrix <4,4> &pose);
 };
 
 #endif /* LIBRARIES_KINEMATICCHAINSARDUINO_LINK_H_ */

@@ -25,10 +25,24 @@ float Link::getAngle(){
 }
 
 
-void Link::computeStep(Transformation* pose){
-	 pose->RotateX(DH_Alpha);
-	 pose->Translate(DH_R,0,0);
-	 pose->Translate(0,0,DH_D);
-	 pose->RotateZ(DH_Theta);
+void Link::computeStep(Matrix<4,4> &poseT){
+	Transformation pose;
+	for(int i = 0; i<3; i++){
+		for(int j = 0; j<3; j++){
+			pose.R(i,j) = poseT(i,j);
+		}
+		pose.p(i) = poseT(i,4);
+	}
+	 pose.RotateX(DH_Alpha);
+	 pose.Translate(DH_R,0,0);
+	 pose.Translate(0,0,DH_D);
+	 pose.RotateZ(DH_Theta+getAngle());
+	 for(int i = 0; i<3; i++){
+	 		for(int j = 0; j<3; j++){
+	 			poseT(i,j) = pose.R(i,j);
+	 		}
+	 		poseT(i,4) = pose.p(i);
+	 	}
+
 }
 
