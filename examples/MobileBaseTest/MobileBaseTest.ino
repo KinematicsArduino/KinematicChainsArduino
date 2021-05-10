@@ -7,14 +7,20 @@
 
 hardwareManager hw;
 MobileBase Robot(&hw);
-String filename;
+String filename = "config.json";
 void setup(){
-	  // Open file for reading
+
+	Serial.begin(115200);
+	Serial.println("Starting mobile base test");
+
+	// Open file for reading
 	  File file = SD.open(filename.c_str());
-	  Robot.parse(&file);
+	  Robot.parse(file);
 
 	  BLA::Matrix<4,4> Result = BLA::Identity<4,4>();
 	  Robot.FKofLimb(Result, 0);
+
+		  Serial.println("FinalTransform");
 	  for(int r = 0; r<4; r++) {
 
 	 		  Serial.println("{");
@@ -23,7 +29,10 @@ void setup(){
 		  	 		  Serial.print(Result(r,k));
 		  	 		  Serial.print(", ");
 	  	 		}
+
+		 		  Serial.println("}");
 	  	 	}
+		  Serial.println("{");
 }
 
 void loop(){

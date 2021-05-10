@@ -35,7 +35,7 @@ class MobileBase{
 		 * Parsing function, reads data from SD card and uses it to construct limbs
 		 * @param file File loaded from SD card that contains JSON file
 		 */
-		void parse(File* file);
+		void parse(File &file);
 
 		/*
 		 * Adds Limb to mobile base

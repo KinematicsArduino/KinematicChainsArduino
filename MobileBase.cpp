@@ -18,11 +18,11 @@ MobileBase::MobileBase(hardwareManager* hwptr){
 *	reads the SD card configuration file and initializes Mobile base off of it.
 * @param file, the JSON config file
 */
-void MobileBase::parse(File* file){
+void MobileBase::parse(File &file){
 
 		StaticJsonDocument<500> doc;
 
-	  DeserializationError error = deserializeJson(doc, file[0]);
+	  DeserializationError error = deserializeJson(doc, file);
 	  if (error) {
 	      Serial.print(F("deserializeJson() failed: "));
 	      Serial.println(error.f_str());
