@@ -22,9 +22,9 @@ class MobileBase{
 		int numberOfLimbs = 0;
 		Limb* limbs[MaxLimbs];
 		Matrix<4,4> gndToFiducial;
-		hardwareManager* hwLocal;
 	public:
 
+		hardwareManager* hwLocal;
 		/*
 		 * Constructor function
 		 * @param hwptr Pointer to the object that manages the actuators
