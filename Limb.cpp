@@ -22,11 +22,13 @@ Limb::Limb(int index, const char* Name, Matrix<4,4> limbRoot, hardwareManager* h
 */
 void Limb::addLinkPtr(Link* linkPTR){
 	links[numberOfLinks++] = linkPTR;
+	Serial.println(String(numberOfLinks));
 }
 
-void Limb::FK(Matrix<4,4> &GlobalTransform){
+Matrix<4,4> &Limb::FK(Matrix<4,4> &GlobalTransform){
 	GlobalTransform*=fiducialtoLimbRoot;
 	for(int i = 0; i < numberOfLinks; i++){
-		links[i]->computeStep(GlobalTransform);
+		GlobalTransform = links[i]->computeStep(GlobalTransform);
 	}
+	return GlobalTransform;
 }

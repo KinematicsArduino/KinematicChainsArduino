@@ -21,7 +21,7 @@ class MobileBase{
 	private:
 		int numberOfLimbs = 0;
 		Limb* limbs[MaxLimbs];
-		Matrix<4,4> gndToFiducial;
+		Matrix<4,4> gndToFiducial=BLA::Identity<4,4>();
 	public:
 
 		hardwareManager* hwLocal;
@@ -43,7 +43,7 @@ class MobileBase{
 		 */
 		void addLimb(Limb* limbPtr);
 
-		void FKofLimb(Matrix<4,4> &Result, int index);
+		Matrix<4,4> &FKofLimb(Matrix<4,4> &Result, int index);
 };
 
 

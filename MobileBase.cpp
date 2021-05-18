@@ -46,8 +46,12 @@ void parseStatic(MobileBase *MB) {
 		}
 
 		const char *LimbName = doc.getMember("LimbNames" + String(i));
-		int Limb_size = doc.getMember(String(i) + "_size");
+		float Limb_size = doc.getMember(String(i) + "_size");
 		Limb *limb2make = new Limb(1, LimbName, limbRoot, MB->hwLocal);
+
+
+		Serial.println("Limb_size: " + String(Limb_size));
+
 		for (int j = 0; j < Limb_size; j++) {
 
 			//Getting DH parameters
@@ -83,10 +87,10 @@ void MobileBase::addLimb(Limb *limbPtr) {
 	numberOfLimbs++;
 }
 
-void MobileBase::FKofLimb(Matrix<4, 4> &Result, int index) {
+Matrix<4,4> &MobileBase::FKofLimb(Matrix<4, 4> &Result, int index) {
 	if (index >= numberOfLimbs)
-		return;
-	Result = gndToFiducial;
-	limbs[index]->FK(Result);
+		return Result;
+	Result *= gndToFiducial;
+	return limbs[index]->FK(Result);
 }
 

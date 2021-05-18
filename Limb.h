@@ -27,7 +27,7 @@ private:
 public:
 	Limb(int index, const char* Name, Matrix<4,4> limbRoot, hardwareManager* hwptr);
 	void addLinkPtr(Link* linkPTR);
-	void FK(Matrix<4,4> &GlobalTransform);
+	Matrix<4,4> &FK(Matrix<4,4> &GlobalTransform);
 
 };
 #endif /* LIBRARIES_KINEMATICCHAINSARDUINO_LIMB_H_ */

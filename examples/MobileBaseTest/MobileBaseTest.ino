@@ -18,7 +18,7 @@ void setup(){
 	  Robot.parse();
 
 	  BLA::Matrix<4,4> Result = BLA::Identity<4,4>();
-	  Robot.FKofLimb(Result, 0);
+	  Result = Robot.FKofLimb(Result, 0);
 
 		  Serial.println("FinalTransform");
 	  for(int r = 0; r<4; r++) {
