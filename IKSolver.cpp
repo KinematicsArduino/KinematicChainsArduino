@@ -26,6 +26,7 @@ bool IKSolver::IK(Matrix<4,4> &Target, float* Result, Link** links, int numberOf
 
 	//Projection on Limb XY
 	if((abs(x)<0.1) && (abs(y)<0.1)){return false;}
+	if(x<0){return false;}
 	Link0Angle = atan2(y,x)+links[0]->DH_Theta;
 
 	Serial.println("Theta0: "+String(Link0Angle));
@@ -45,7 +46,6 @@ bool IKSolver::IK(Matrix<4,4> &Target, float* Result, Link** links, int numberOf
 
 	if(((abs(x)<0.1) && (abs(y)<0.1))){return false;}
 	//Cannot access quadrants 2&3, edit to do so
-	if(x<0){return false;}
 	float TriangleAngle = atan2(y,x);
 	//Serial.println("TriangleAngle: "+String(TriangleAngle));
 	Matrix<4,4> T3 = Identity<4,4>();
