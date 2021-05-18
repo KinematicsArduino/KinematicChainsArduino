@@ -82,13 +82,11 @@ Matrix<4, 4>& RotateZ(Matrix<4, 4> &poseT, float theta) {
 	poseT(1, 2) = tmp2;
 	//poseT = invert(poseT);
 
-
-	float TempY = cos(theta)* poseT(0,3)-sin(theta)*poseT(1,3);
-	poseT(0,3) = sin(theta)* poseT(0,3)+cos(theta)*poseT(1,3);
-	poseT(1,3) = TempY;
+	float TempY = cos(theta) * poseT(0, 3) - sin(theta) * poseT(1, 3);
+	poseT(0, 3) = sin(theta) * poseT(0, 3) + cos(theta) * poseT(1, 3);
+	poseT(1, 3) = TempY;
 	return poseT;
 }
-
 
 Matrix<4, 4>& RotateX(Matrix<4, 4> &poseT, float alpha) {
 	//poseT = invert(poseT);
@@ -110,9 +108,9 @@ Matrix<4, 4>& RotateX(Matrix<4, 4> &poseT, float alpha) {
 	poseT(2, 2) = tmp2;
 	//poseT = invert(poseT);
 
-	float TempY = cos(alpha)* poseT(1,3)-sin(alpha)*poseT(2,3);
-	poseT(2,3) = sin(alpha)* poseT(1,3)+cos(alpha)*poseT(2,3);
-	poseT(1,3) = TempY;
+	float TempY = cos(alpha) * poseT(1, 3) - sin(alpha) * poseT(2, 3);
+	poseT(2, 3) = sin(alpha) * poseT(1, 3) + cos(alpha) * poseT(2, 3);
+	poseT(1, 3) = TempY;
 	return poseT;
 }
 
@@ -152,14 +150,22 @@ Matrix<4, 4>& Link::computeStep(Matrix<4, 4> &poseT) {
 //		}
 //		pose.p(i) = poseT(i, 3);
 //	}
+	Matrix<4, 4> MatrixD = BLA::Identity<4, 4>();
+	Matrix<4, 4> MatrixTheta = BLA::Identity<4, 4>();
+	Matrix<4, 4> MatrixAlpha = BLA::Identity<4, 4>();
+	Matrix<4, 4> MatrixR = BLA::Identity<4, 4>();
 
-	TranslateZ(poseT, DH_D);
+	TranslateZ(MatrixD, DH_D);
+	poseT *= MatrixD;
 	PrintMatrix(poseT, "D" + String(DH_D) + " " + String(linkIndex));
-	RotateZ(poseT, DH_Theta + getAngle());
+	RotateZ(MatrixTheta, DH_Theta + getAngle());
+	poseT *= MatrixTheta;
 	PrintMatrix(poseT, "Theta" + String(DH_Theta) + " " + String(linkIndex));
-	RotateX(poseT, DH_Alpha);
+	RotateX(MatrixAlpha, DH_Alpha);
+	poseT *= MatrixAlpha;
 	PrintMatrix(poseT, "Alpha" + String(DH_Alpha) + " " + String(linkIndex));
-	TranslateX(poseT, DH_R);
+	TranslateX(MatrixR, DH_R);
+	poseT *= MatrixR;
 	PrintMatrix(poseT, "R" + String(DH_R) + " " + String(linkIndex));
 
 //	for (int i = 0; i < 3; i++) {
