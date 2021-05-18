@@ -8,7 +8,7 @@
 #ifndef LIBRARIES_KINEMATICCHAINSARDUINO_LIMB_H_
 #define LIBRARIES_KINEMATICCHAINSARDUINO_LIMB_H_
 
-#include "link.h"
+#include "Link.h"
 #include "IKSolver.h"
 #include <Geometry.h>
 
@@ -21,13 +21,16 @@ private:
 	const char* limbName;
 	Link* links[maxLinks];
 	Matrix<4,4> fiducialtoLimbRoot;
-	IKSolver ik;
 	hardwareManager* hwLocal;
-
+	IKSolver *ik = NULL;
 public:
 	Limb(int index, const char* Name, Matrix<4,4> limbRoot, hardwareManager* hwptr);
 	void addLinkPtr(Link* linkPTR);
-	Matrix<4,4> &FK(Matrix<4,4> &GlobalTransform);
+	Matrix<4,4> &FK(Matrix<4,4> &GlobalTransform, float* currAngles);
+	bool IK(Matrix<4,4> &Target, float* Result);
+
+
+
 
 };
 #endif /* LIBRARIES_KINEMATICCHAINSARDUINO_LIMB_H_ */

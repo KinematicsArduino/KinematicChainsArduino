@@ -87,10 +87,19 @@ void MobileBase::addLimb(Limb *limbPtr) {
 	numberOfLimbs++;
 }
 
-Matrix<4,4> &MobileBase::FKofLimb(Matrix<4, 4> &Result, int index) {
+Matrix<4,4> &MobileBase::FKofLimb(Matrix<4, 4> &Result, float* currAngles, int index) {
 	if (index >= numberOfLimbs)
 		return Result;
 	Result *= gndToFiducial;
-	return limbs[index]->FK(Result);
+	return limbs[index]->FK(Result, currAngles);
 }
+
+bool MobileBase::IKofLimb(Matrix<4,4> &Target, float* Result, int Index){
+	if (Index >= numberOfLimbs)
+			return false;
+		Target = gndToFiducial.Inverse()*Target;
+		return limbs[Index]->IK(Target, Result);
+}
+
+
 

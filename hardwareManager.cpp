@@ -6,12 +6,12 @@
  */
 
 #include <hardwareManager.h>
-
+#include<math.h>
 hardwareManager::hardwareManager() {
 	// TODO Auto-generated constructor stub
 
 }
 
 float hardwareManager::getCurrentValue(int Pin){
-	return 0;
+	return 30;
 }

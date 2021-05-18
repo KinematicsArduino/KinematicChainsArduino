@@ -25,10 +25,18 @@ void Limb::addLinkPtr(Link* linkPTR){
 	Serial.println(String(numberOfLinks));
 }
 
-Matrix<4,4> &Limb::FK(Matrix<4,4> &GlobalTransform){
+Matrix<4,4> &Limb::FK(Matrix<4,4> &GlobalTransform,float* currAngles){
 	GlobalTransform*=fiducialtoLimbRoot;
 	for(int i = 0; i < numberOfLinks; i++){
-		GlobalTransform = links[i]->computeStep(GlobalTransform);
+		GlobalTransform = links[i]->computeStep(GlobalTransform, currAngles[i]);
 	}
 	return GlobalTransform;
+}
+
+
+bool Limb::IK(Matrix<4,4> &Target, float* Result){
+	if(ik == NULL){
+		ik =new IKSolver();}
+	Target =  fiducialtoLimbRoot.Inverse()*Target;
+	return ik->IK(Target,Result,links,numberOfLinks);
 }

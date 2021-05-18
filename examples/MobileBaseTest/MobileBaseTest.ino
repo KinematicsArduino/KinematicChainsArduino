@@ -18,21 +18,17 @@ void setup(){
 	  Robot.parse();
 
 	  BLA::Matrix<4,4> Result = BLA::Identity<4,4>();
-	  Result = Robot.FKofLimb(Result, 0);
+	  float R[3] = {0,0,0};
+	  Result = Robot.FKofLimb(Result, R,0);
 
-		  Serial.println("FinalTransform");
-	  for(int r = 0; r<4; r++) {
 
-	 		  Serial.println("{");
-	  	 		for(int k = 0; k<4; k++) {
+	  float IkAngles[3] = {-1,-1,-1};
+	  Robot.IKofLimb(Result, IkAngles ,0);
+	  Serial.println(" \n {");
+	  for(int i=0; i<3; i++){
+		  Serial.print(IkAngles[i]);
+	  }
 
-		  	 		  Serial.print(Result(r,k));
-		  	 		  Serial.print(", ");
-	  	 		}
-
-		 		  Serial.println("}");
-	  	 	}
-		  Serial.println("{");
 }
 
 void loop(){

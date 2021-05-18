@@ -33,17 +33,32 @@ class MobileBase{
 
 		/*
 		 * Parsing function, reads data from SD card and uses it to construct limbs
-		 * @param
+		 *
 		 */
 		void parse();
 
 		/*
 		 * Adds Limb to mobile base
-		 * @param limbPtr, a pointer to the new limb
+		 * @param limbPtr a pointer to the new limb
 		 */
 		void addLimb(Limb* limbPtr);
 
-		Matrix<4,4> &FKofLimb(Matrix<4,4> &Result, int index);
+		/*
+		 * Solves for the forward kinematics of limb "index"
+		 * @param Result  a matrix that stores the resultant transformation
+		 * @param currAngles  an array of current angles
+		 * @param index  index of limb to solve
+		 */
+		Matrix<4,4> &FKofLimb(Matrix<4,4> &Result, float* currAngles, int index);
+
+		/*
+		 * Solves the inverse kinematics of limb "Index"
+		 * @param Target The target transformation
+		 * @param Result The resultant angles
+		 * @param Index The limb index
+		 */
+		bool IKofLimb(Matrix<4,4> &Target, float* Result, int Index);
+
 };
 
 

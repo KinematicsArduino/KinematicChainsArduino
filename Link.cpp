@@ -142,7 +142,7 @@ float Link::getAngle() {
 	return ScaleActuator * (hwLocal->getCurrentValue(hardwarePin) - Offset);
 }
 
-Matrix<4, 4>& Link::computeStep(Matrix<4, 4> &poseT) {
+Matrix<4, 4>& Link::computeStep(Matrix<4, 4> &poseT, float currAngle) {
 //	Transformation pose;
 //	for (int i = 0; i < 3; i++) {
 //		for (int j = 0; j < 3; j++) {
@@ -154,19 +154,18 @@ Matrix<4, 4>& Link::computeStep(Matrix<4, 4> &poseT) {
 	Matrix<4, 4> MatrixTheta = BLA::Identity<4, 4>();
 	Matrix<4, 4> MatrixAlpha = BLA::Identity<4, 4>();
 	Matrix<4, 4> MatrixR = BLA::Identity<4, 4>();
-
 	TranslateZ(MatrixD, DH_D);
 	poseT *= MatrixD;
-	PrintMatrix(poseT, "D" + String(DH_D) + " " + String(linkIndex));
-	RotateZ(MatrixTheta, DH_Theta + getAngle());
+	//PrintMatrix(poseT, "D" + String(DH_D) + " " + String(linkIndex));
+	RotateZ(MatrixTheta, DH_Theta + (3.14159*currAngle/180.0));
 	poseT *= MatrixTheta;
-	PrintMatrix(poseT, "Theta" + String(DH_Theta) + " " + String(linkIndex));
+	//PrintMatrix(poseT, "Theta" + String(180*DH_Theta/3.14159+currAngle) + " " + String(linkIndex));
 	RotateX(MatrixAlpha, DH_Alpha);
 	poseT *= MatrixAlpha;
-	PrintMatrix(poseT, "Alpha" + String(DH_Alpha) + " " + String(linkIndex));
+	//PrintMatrix(poseT, "Alpha" + String(180/3.14159*DH_Alpha) + " " + String(linkIndex));
 	TranslateX(MatrixR, DH_R);
 	poseT *= MatrixR;
-	PrintMatrix(poseT, "R" + String(DH_R) + " " + String(linkIndex));
+	//PrintMatrix(poseT, "R" + String(DH_R) + " " + String(linkIndex));
 
 //	for (int i = 0; i < 3; i++) {
 //		for (int j = 0; j < 3; j++) {
