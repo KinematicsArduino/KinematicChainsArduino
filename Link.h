@@ -11,6 +11,17 @@
 #include <Geometry.h>
 void PrintMatrix(Matrix<4, 4> MatrixEx, String name);
 
+
+
+Matrix<4, 4>& RotateZ(Matrix<4, 4> &poseT, float theta);
+
+Matrix<4, 4>& RotateX(Matrix<4, 4> &poseT, float alpha);
+
+Matrix<4, 4>& TranslateZ(Matrix<4, 4> &poseT, float D);
+
+Matrix<4, 4>& TranslateX(Matrix<4, 4> &poseT, float R);
+
+
 class Link {
 
 	public:
