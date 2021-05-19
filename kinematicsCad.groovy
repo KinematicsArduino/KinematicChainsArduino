@@ -56,7 +56,7 @@ for(DHParameterKinematics limb: Limbs) {
 	database.put("limbRoot"+LimbIndex, limbRoot)
 	
 	database.put("LimbNames"+LimbIndex, name)
-	LimbIndex++;
+
 	println "name = "+ name + " limbRoot = " + limbRoot 
 	
 	for(int i = 0; i <NoLinks; i++) {
@@ -72,6 +72,9 @@ for(DHParameterKinematics limb: Limbs) {
 		database.put(LimbIndex+"scale"+i, scale)
 		database.put(LimbIndex+"HardwareIndex"+i, Pin)
 		println "DH Parameters; Alpha = "+Math.toDegrees(Alpha)+" D = "+D+" R = "+R+" Theta = "+Math.toDegrees(Theta)
+		def linkLimits = [limb.getMaxEngineeringUnits(i), limb.getMinEngineeringUnits(i)]
+		
+		database.put(LimbIndex+"Limit"+i, linkLimits)
 		
 		def LinkDH = []
 		LinkDH.add(Alpha)
@@ -82,6 +85,7 @@ for(DHParameterKinematics limb: Limbs) {
 	}
 	
 	database.put(LimbIndex+"_size", NoLinks)
+	LimbIndex++;
 }
 database.put("Limbs_size", Limbs.size())
 
@@ -91,7 +95,11 @@ database.put("Limbs_size", Limbs.size())
 String writeOut = gson.toJson(database, TT_mapStringString);
 println "New database JSON content = \n\n"+writeOut
 
-File file = new File("D:\\config.json")
+def  fileName = "E:\\config.json"
+File file = new File(fileName)
 if(!file.exists()){file.createNewFile()}
 
-file.write(writeOut)
+BufferedWriter writer = new BufferedWriter(new FileWriter(fileName));
+writer.write(writeOut);
+
+writer.close();
