@@ -21,6 +21,9 @@ Matrix<4, 4>& TranslateZ(Matrix<4, 4> &poseT, float D);
 
 Matrix<4, 4>& TranslateX(Matrix<4, 4> &poseT, float R);
 
+enum IKResult{ IKSuccess, JointLimits , ElbowTriangleSingularity, OutsideOfWorkspace, DHConfigError, NumberOfLinksError, Quadrants2and3Unreachable};
+
+void PrintIKResult(IKResult Error);
 
 class Link {
 
@@ -33,10 +36,19 @@ class Link {
 
 	float ScaleActuator;
 	float Offset;
+	float MaxLink, MinLink;
+
 
 	hardwareManager* hwLocal;
 	int hardwarePin;
-	Link(int index, float DH_alpha, float DH_d, float DH_R, float DH_Theta, int ID, hardwareManager* hwptr, float ScaleActuator, float Offset);
+	Link(int index,
+		float DH_alpha, float DH_d, float DH_R, float DH_Theta,
+		int ID, hardwareManager* hwptr,
+		float ScaleActuator,
+		float Offset,
+		float MaxLink,
+		float MinLink
+		 	);
 	/*
 	 * getAngle returns angle of link in degrees
 	 */

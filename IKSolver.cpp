@@ -17,16 +17,17 @@ IKSolver::~IKSolver() {
 }
 
 
-bool IKSolver::IK(Matrix<4,4> &Target, float* Result, Link** links, int numberOfLinks){
+IKResult IKSolver::IK(Matrix<4,4> &Target, float* Result, Link** links, int numberOfLinks){
 	//PrintMatrix(Target, "_ Limb 0 IK");
+	if(numberOfLinks!=3)return NumberOfLinksError;
 	float x = Target(0,3);
 	float y = Target(1,3);
 	Serial.println(String(x)+":Xval  "+String(y)+":Yval  ");
 	float Link0Angle;
 
 	//Projection on Limb XY
-	if((abs(x)<0.1) && (abs(y)<0.1)){return false;}
-	if(x<0){return false;}
+	if((abs(x)<0.1) && (abs(y)<0.1)){return ElbowTriangleSingularity;}
+	if(x<0){return Quadrants2and3Unreachable;}
 	Link0Angle = atan2(y,x)+links[0]->DH_Theta;
 
 	Serial.println("Theta0: "+String(Link0Angle));
@@ -42,9 +43,10 @@ bool IKSolver::IK(Matrix<4,4> &Target, float* Result, Link** links, int numberOf
 	//PrintMatrix(T2, "T2");
 	x = T2(0,3);
 	y = T2(1,3);
+	float z = T2(2,3);
 	//Serial.println(String(x)+":Xval  "+String(y)+":Yval  ");
-
-	if(((abs(x)<0.1) && (abs(y)<0.1))){return false;}
+	if(abs(z)>0.1) return DHConfigError;
+	if(((abs(x)<0.1) && (abs(y)<0.1))){return ElbowTriangleSingularity;}
 	//Cannot access quadrants 2&3, edit to do so
 	float TriangleAngle = atan2(y,x);
 	//Serial.println("TriangleAngle: "+String(TriangleAngle));
@@ -60,7 +62,7 @@ bool IKSolver::IK(Matrix<4,4> &Target, float* Result, Link** links, int numberOf
 	float A = links[1]->DH_R;
 	float B = links[2]->DH_R;
 
-	if((A+B)< C){ return false;}
+	if((A+B)< C){ return OutsideOfWorkspace;}
 
 	float Link1Theta = acos((pow(B,2)-pow(A,2)-pow(C,2))/(-(2*A*C)));
 
@@ -81,5 +83,5 @@ bool IKSolver::IK(Matrix<4,4> &Target, float* Result, Link** links, int numberOf
 	Link2Theta*=-1;
 	Result[2] = 180/3.14159*Link2Theta;
 
-	return true;
+	return IKSuccess;
 }

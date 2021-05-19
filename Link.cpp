@@ -57,6 +57,32 @@ void PrintTransform(Transformation T, String name) {
 	Serial.println("{");
 }
 
+void PrintIKResult(IKResult Error){
+	switch(Error){
+	case IKSuccess:
+		Serial.println("IKSuccess");
+		break;
+	case JointLimits:
+		Serial.println("JointLimits");
+		break;
+	case ElbowTriangleSingularity:
+		Serial.println("ElbowTriangleSingularity");
+		break;
+	case OutsideOfWorkspace:
+		Serial.println("OutsideOfWorkspace");
+		break;
+	case DHConfigError:
+		Serial.println("DHConfigError");
+		break;
+	case NumberOfLinksError:
+		Serial.println("NumberOfLinksError");
+		break;
+	case Quadrants2and3Unreachable:
+	Serial.println("Quadrants2and3Unreachable");
+	break;
+	}
+}
+
 Matrix<4, 4>& RotateZ(Matrix<4, 4> &poseT, float theta) {
 
 	float tmp1, tmp2;
@@ -125,7 +151,9 @@ Matrix<4, 4>& TranslateX(Matrix<4, 4> &poseT, float R) {
 }
 
 Link::Link(int index, float DH_alpha, float DH_d, float DH_r, float DH_theta,
-		int ID, hardwareManager *hwptr, float scale, float offset) {
+		int ID, hardwareManager *hwptr, float scale, float offset, float maxLink, float minLink) {
+	MaxLink = maxLink;
+	MinLink = minLink;
 	linkIndex = index;
 	DH_Alpha = DH_alpha;
 	DH_D = DH_d;

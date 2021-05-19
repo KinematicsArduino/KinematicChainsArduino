@@ -27,7 +27,7 @@ public:
 	Limb(int index, const char* Name, Matrix<4,4> limbRoot, hardwareManager* hwptr);
 	void addLinkPtr(Link* linkPTR);
 	Matrix<4,4> &FK(Matrix<4,4> &GlobalTransform, float* currAngles);
-	bool IK(Matrix<4,4> &Target, float* Result);
+	IKResult IK(Matrix<4,4> &Target, float* Result);
 
 
 

@@ -7,11 +7,13 @@
 
 #include <hardwareManager.h>
 #include<math.h>
-hardwareManager::hardwareManager() {
-	// TODO Auto-generated constructor stub
 
-}
 
-float hardwareManager::getCurrentValue(int Pin){
-	return 30;
-}
+	void hardwareManager::StoreValue(int Pin, float Target){
+		ValMap[Pin] = Target;
+	}
+
+
+	float hardwareManager::GetStoredVal(int Pin){
+		return ValMap[Pin];
+	}

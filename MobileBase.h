@@ -57,7 +57,7 @@ class MobileBase{
 		 * @param Result The resultant angles
 		 * @param Index The limb index
 		 */
-		bool IKofLimb(Matrix<4,4> &Target, float* Result, int Index);
+		IKResult IKofLimb(Matrix<4,4> &Target, float* Result, int Index);
 
 };
 

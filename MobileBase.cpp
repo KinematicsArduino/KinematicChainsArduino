@@ -54,6 +54,9 @@ void parseStatic(MobileBase *MB) {
 
 		for (int j = 0; j < Limb_size; j++) {
 
+			double LimitUp= doc.getMember(String(i) + "Limit" + String(j))[0];
+			double LimitDown= doc.getMember(String(i) + "Limit" + String(j))[1];
+
 			//Getting DH parameters
 			double DH_alpha = doc.getMember(String(i) + "_DH_" + String(j))[0];
 			double DH_d = doc.getMember(String(i) + "_DH_" + String(j))[1];
@@ -65,7 +68,7 @@ void parseStatic(MobileBase *MB) {
 			float offset = doc.getMember(String(i) + "Offset" + String(j));
 			float scale = doc.getMember(String(i) + "scale" + String(j));
 			Link *linkptr = new Link(j, DH_alpha, DH_d, DH_r, DH_theta,
-					PinNumber, MB->hwLocal, scale, offset);
+					PinNumber, MB->hwLocal, scale, offset, LimitUp, LimitDown);
 			//add to limb array
 			limb2make->addLinkPtr(linkptr);
 
@@ -94,9 +97,9 @@ Matrix<4,4> &MobileBase::FKofLimb(Matrix<4, 4> &Result, float* currAngles, int i
 	return limbs[index]->FK(Result, currAngles);
 }
 
-bool MobileBase::IKofLimb(Matrix<4,4> &Target, float* Result, int Index){
+IKResult MobileBase::IKofLimb(Matrix<4,4> &Target, float* Result, int Index){
 	if (Index >= numberOfLimbs)
-			return false;
+			return NumberOfLinksError;
 		Target = gndToFiducial.Inverse()*Target;
 		return limbs[Index]->IK(Target, Result);
 }

@@ -16,7 +16,7 @@ public:
 	IKSolver();
 	virtual ~IKSolver();
 
-	bool IK(Matrix<4,4> &Target, float* Result, Link** links, int numberOfLinks);
+	IKResult IK(Matrix<4,4> &Target, float* Result, Link** links, int numberOfLinks);
 
 };
 

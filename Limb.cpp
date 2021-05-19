@@ -34,9 +34,15 @@ Matrix<4,4> &Limb::FK(Matrix<4,4> &GlobalTransform,float* currAngles){
 }
 
 
-bool Limb::IK(Matrix<4,4> &Target, float* Result){
+IKResult Limb::IK(Matrix<4,4> &Target, float* Result){
 	if(ik == NULL){
 		ik =new IKSolver();}
 	Target =  fiducialtoLimbRoot.Inverse()*Target;
-	return ik->IK(Target,Result,links,numberOfLinks);
+	IKResult IKof = ik->IK(Target,Result,links,numberOfLinks);
+	if(IKof == IKSuccess){
+		for(int i = 0; i < numberOfLinks; i++){
+			if((Result[i] >links[i]->MaxLink)||(Result[i] < links[i]->MinLink))return JointLimits;
+		}
+	}
+	return IKof;
 }
