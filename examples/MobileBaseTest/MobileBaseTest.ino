@@ -32,7 +32,10 @@ void setup() {
 				Serial.println(
 						"Expected:" + String(R[i]) + "  Got:"
 								+ String(IkAngles[i]));
+				hw.StoreValue(i, IkAngles[i]);
 			}
+			if(!hw.IsMoveDone())hw.SynchronizeMove(1000);
+
 		} else {
 			PrintIKResult(Error);
 		}

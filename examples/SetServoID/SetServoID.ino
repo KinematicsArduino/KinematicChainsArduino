@@ -12,8 +12,7 @@ void loop() {
 	// Set any motor plugged in to ID 3
 	// this INO acts as an auto-provisioner for any motor plugged in
 	servo.id_write(id);
-	Serial.println("Setting to ID "+String (id));
+	Serial.println("Setting to ID "+String (id)+"    "+String(servo.id_read()));
 	delay(200);
-
 }
 

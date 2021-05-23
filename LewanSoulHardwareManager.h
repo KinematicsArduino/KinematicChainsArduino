@@ -25,9 +25,9 @@ public:
 private:
 	bool IsInitialized = false;
 	int num = 3;
-	int32_t startingAngles []= {-9000, 8614, 3371};
-	int32_t upperAngles []= {9000,10000,6300};
-	int32_t lowerAngles []= {-9000,-4500,-9000};
+	int startingAngles[3] = {-9000, 8614, 3371};
+	int upperAngles[3] = {9000,10000,6300};
+	int lowerAngles[3] = {-9000,-4500,-9000};
 	LX16ABus servoBus;
 	LX16AServo ** motors;
 	bool HardwareReady = false;
