@@ -1,4 +1,3 @@
-
 #include <lx16a-servo.h>
 #include <KinematicChainsArduino.h>
 #include <ArduinoJson.h>
@@ -16,7 +15,10 @@ void setup() {
 	Serial.begin(115200);
 	Serial.println("Starting mobile base test");
 	hw.Initialize();
-	while(!hw.isHardwareReady()){Serial.println("Waiting For Hardware"); delay(1000);}
+	while (!hw.isHardwareReady()) {
+		Serial.println("Waiting For Hardware");
+		delay(1000);
+	}
 	// Open file for reading
 	Robot.parse();
 	for (float j = -30; j < 30; j += 5) {
@@ -29,12 +31,11 @@ void setup() {
 		if (Error == IKSuccess) {
 			Serial.println(" \n {");
 			for (int i = 0; i < 3; i++) {
-				Serial.println(
-						"Expected:" + String(R[i]) + "  Got:"
-								+ String(IkAngles[i]));
+				Serial.println("Expected:" + String(R[i]) + "  Got:"+ String(IkAngles[i]));
 				hw.StoreValue(i, IkAngles[i]);
 			}
-			if(!hw.IsMoveDone())hw.SynchronizeMove(1000);
+			if (!hw.IsMoveDone())
+				hw.SynchronizeMove(1000);
 
 		} else {
 			PrintIKResult(Error);

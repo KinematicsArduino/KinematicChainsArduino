@@ -22,8 +22,13 @@ public:
 
 	void StoreValue(int Pin, float Value);
 	float GetStoredVal(int Pin);
+	float DegreesToHardware = 1;
 	std::map<int, float> ValMap;
 	std::map<int, int> hardwareIndexMap;
+
+private:
+
+
 
 
 };
