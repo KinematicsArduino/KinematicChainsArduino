@@ -10,10 +10,10 @@
 
 
 	void hardwareManager::StoreValue(int Pin, float Target){
-		ValMap[Pin] = Target;
+		ValMap[hardwareIndexMap[Pin]] = Target;
 	}
 
 
 	float hardwareManager::GetStoredVal(int Pin){
-		return ValMap[Pin];
+		return ValMap[hardwareIndexMap[Pin]];
 	}

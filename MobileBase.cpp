@@ -11,29 +11,35 @@ MobileBase::MobileBase(hardwareManager *hwptr) {
 	hwLocal = hwptr;
 
 }
+
+StaticJsonDocument<6000> doc;
+
 /*
  *	reads the SD card configuration file and initializes Mobile base off of it.
  * @param file, the JSON config file
  */
 void parseStatic(MobileBase *MB) {
-
+	Serial.println("Beginning");
 	while (!SD.begin(33)) {
+
+
 		Serial.println(F("Failed to initialize SD library"));
 		delay(1000);
 	}
-
 	const char *filename = "/config.json";
 	File file = SD.open(filename);
 
-	StaticJsonDocument<5000> doc;
+
 
 	DeserializationError error = deserializeJson(doc, file);
+	Serial.println(error.c_str());
 	if (error) {
 		Serial.print(F("deserializeJson() failed: "));
-		Serial.println(error.f_str());
+		Serial.println(error.c_str());
 		return;
 	}
 	int Limbs_size = doc.getMember("Limbs_size");
+	Serial.println("Limbs_size");
 	for (int i = 0; i < Limbs_size; i++) {
 
 		//Define LimbRoot transformation
@@ -46,6 +52,7 @@ void parseStatic(MobileBase *MB) {
 		}
 
 		const char *LimbName = doc.getMember("LimbNames" + String(i));
+		Serial.println("LimbNames");
 		float Limb_size = doc.getMember(String(i) + "_size");
 		Limb *limb2make = new Limb(1, LimbName, limbRoot, MB->hwLocal);
 
@@ -106,3 +113,34 @@ IKResult MobileBase::IKofLimb(Matrix<4,4> &Target, float* Result, int Index){
 
 
 
+/*
+ * Move a limb to target value
+ * @param limbIndex The target limb index
+ * @param milliseconds The time to move
+ * @param target Target value
+ * @return IKResult
+ */
+IKResult MobileBase::MoveToTarget(int limbIndex, int milliseconds, Matrix<4,4> &Target){
+	int num  = limbs[limbIndex]->GetNumberOfLinks();
+	float JointValues[num];
+
+	IKResult Error = IKofLimb(Target, JointValues,limbIndex);
+
+	if(Error == IKSuccess){
+		for(int i = 0; i<num && Error == IKSuccess;i++){
+				Error = limbs[limbIndex]->cacheValue(JointValues[i], i);
+		}
+
+		hwLocal->SynchronizeMove(milliseconds);
+	}
+	return Error;
+
+}
+
+
+/*
+ * @return Is hw manager done
+ */
+bool MobileBase::IsHWDone(){
+	return hwLocal->IsMoveDone();
+}

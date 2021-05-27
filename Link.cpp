@@ -204,3 +204,11 @@ Matrix<4, 4>& Link::computeStep(Matrix<4, 4> &poseT, float currAngle) {
 	return poseT;
 }
 
+
+
+
+IKResult Link::cacheValue(float valueInDegrees){
+	if((valueInDegrees>MaxLink)||(valueInDegrees<MinLink)){return JointLimits;}
+	hwLocal->StoreValue(hardwarePin, (valueInDegrees/ScaleActuator)+Offset);
+	return IKSuccess;
+}

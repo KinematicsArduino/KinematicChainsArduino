@@ -18,20 +18,19 @@ class Limb {
 private:
 	int limbIndex;
 	int numberOfLinks = 0;
-	const char* limbName;
-	Link* links[maxLinks];
-	Matrix<4,4> fiducialtoLimbRoot;
-	hardwareManager* hwLocal;
+	const char *limbName;
+	Link *links[maxLinks];
+	Matrix<4, 4> fiducialtoLimbRoot;
+	hardwareManager *hwLocal;
 	IKSolver *ik = NULL;
 public:
-	Limb(int index, const char* Name, Matrix<4,4> limbRoot, hardwareManager* hwptr);
-	void addLinkPtr(Link* linkPTR);
-	Matrix<4,4> &FK(Matrix<4,4> &GlobalTransform, float* currAngles);
-	IKResult IK(Matrix<4,4> &Target, float* Result);
-
-
-
-
+	Limb(int index, const char *Name, Matrix<4, 4> limbRoot,
+			hardwareManager *hwptr);
+	void addLinkPtr(Link *linkPTR);
+	Matrix<4, 4>& FK(Matrix<4, 4> &GlobalTransform, float *currAngles);
+	IKResult IK(Matrix<4, 4> &Target, float *Result);
+	IKResult cacheValue(float valueInDegrees, int linkIndex);
+	int GetNumberOfLinks();
 };
 #endif /* LIBRARIES_KINEMATICCHAINSARDUINO_LIMB_H_ */
 

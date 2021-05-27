@@ -36,7 +36,7 @@ bool LewanSoulHardwareManager::isHardwareReady() {
 
 
 				int32_t pos = startingAngles[i]-motors[i]->pos_read();
-					if(pos!=0){
+					if(abs(pos)>24){
 						Serial.println("Settling Error of"+String(pos));
 						return false;
 					}
@@ -54,7 +54,7 @@ void LewanSoulHardwareManager::Initialize() {
 	servoBus.beginOnePinMode(&Serial1, 15);
 	motors = new LX16AServo*[num];
 	for (int i = 0; i < num; i++) {
-		hardwareIndexMap[i] = i+1;
+		hardwareIndexMap[i] = i;
 		motors[i] = new LX16AServo(&servoBus, i + 1);
 		motors[i]->disable();
 	}
@@ -65,7 +65,9 @@ void LewanSoulHardwareManager::Initialize() {
 
 void LewanSoulHardwareManager::SynchronizeMove(int milSec) {
 	for(int i = 0; i < num; i++){
-	motors[i]->move_time_and_wait_for_sync(ValMap[i], milSec);
+		float Value = ValMap[i];
+		Serial.println("Value of "+String(i)+" = "+String(Value));
+	motors[i]->move_time_and_wait_for_sync(Value, milSec);
 	}
 
 	servoBus.move_sync_start();

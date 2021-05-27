@@ -54,6 +54,7 @@ class Link {
 	 */
 	float getAngle();
 	Matrix<4,4> &computeStep(Matrix <4,4> &pose, float currAngle);
+	IKResult cacheValue(float valueInDegrees);
 };
 
 #endif /* LIBRARIES_KINEMATICCHAINSARDUINO_LINK_H_ */

@@ -59,6 +59,20 @@ class MobileBase{
 		 */
 		IKResult IKofLimb(Matrix<4,4> &Target, float* Result, int Index);
 
+
+		/*
+		 * Move a limb to target value
+		 * @param limbIndex The target limb index
+		 * @param milliseconds The time to move
+		 * @param target Target value
+		 * @return IKResult
+		 */
+		IKResult MoveToTarget(int limbIndex, int milliseconds, Matrix<4,4> &Target);
+
+		/*
+		 * @return Is hw manager done
+		 */
+		bool IsHWDone();
 };
 
 

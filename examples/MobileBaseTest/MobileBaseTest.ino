@@ -22,26 +22,22 @@ void setup() {
 	Serial.println("Starting Parse");
 	// Open file for reading
 	Robot.parse();
+
 	for (float j = -30; j < 30; j += 5) {
 		BLA::Matrix<4, 4> Result = BLA::Identity<4, 4>();
 		float R[3] = { j, j, j };
 		Result = Robot.FKofLimb(Result, R, 0);
-		//PrintMatrix(Result, "Result");
-		float IkAngles[3] = { -1, -1, -1 };
-		IKResult Error = Robot.IKofLimb(Result, IkAngles, 0);
-		if (Error == IKSuccess) {
-			Serial.println(" \n {");
-			for (int i = 0; i < 3; i++) {
-				Serial.println("Expected:" + String(R[i]) + "  Got:"+ String(IkAngles[i]));
-				hw.StoreValue(i, IkAngles[i]);
-			}
-			if (!hw.IsMoveDone())
-				hw.SynchronizeMove(1000);
+		PrintMatrix(Result, "Result");
 
-		} else {
-			PrintIKResult(Error);
-		}
+		IKResult Error = Robot.MoveToTarget(0, 1000, Result);
+		if (Error == IKSuccess) {
+			while (!Robot.IsHWDone()) {
+				Serial.println("Moving Robot");
+				delay(100);
+			};
+		}else {PrintIKResult(Error);}
 	}
+
 }
 
 void loop() {
