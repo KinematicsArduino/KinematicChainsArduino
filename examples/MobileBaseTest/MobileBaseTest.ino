@@ -19,6 +19,7 @@ void setup() {
 		Serial.println("Waiting For Hardware");
 		delay(1000);
 	}
+	Serial.println("Starting Parse");
 	// Open file for reading
 	Robot.parse();
 	for (float j = -30; j < 30; j += 5) {

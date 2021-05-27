@@ -28,8 +28,11 @@ bool LewanSoulHardwareManager::isHardwareReady() {
 	if (!HardwareReady) {
 		Initialize();
 		if (digitalRead(0) == 0) {
+
 			for(int i = 0; i<num; i++){
+				Serial.println("Calibrating "+ String(i));
 				motors[i]->calibrate(startingAngles[i],lowerAngles[i],upperAngles[i]);
+				Serial.println("Calibrated "+ String(i));
 
 
 				int32_t pos = startingAngles[i]-motors[i]->pos_read();

@@ -2,7 +2,7 @@
 #include <lx16a-servo.h>
 LX16ABus servoBus;
 LX16AServo servo(&servoBus, LX16A_BROADCAST_ID);// send these commands to any motor on the bus
-int id =3;
+int id =1;
 void setup() {
 	servoBus.beginOnePinMode(&Serial1, 15);// use pin 2 as the TX flag for buffer
 	Serial.begin(115200);
