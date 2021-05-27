@@ -66,7 +66,7 @@ for(DHParameterKinematics limb: Limbs) {
 		def Theta = limb.getDH_Theta(i)
 		
 		def Offset =limb.getLinkConfiguration(i).getStaticOffset()
-		def scale =100.0*limb.getLinkConfiguration(i).getScale()
+		def scale =0.01*limb.getLinkConfiguration(i).getScale()
 		def Pin = limb.getLinkConfiguration(i).getHardwareIndex()
 		database.put(LimbIndex+"Offset"+i, Offset)
 		database.put(LimbIndex+"scale"+i, scale)
