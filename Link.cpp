@@ -159,7 +159,10 @@ Link::Link(int index, float DH_alpha, float DH_d, float DH_r, float DH_theta,
 	DH_D = DH_d;
 	DH_R = DH_r;
 	DH_Theta = DH_theta;
-
+	if(isnan(offset)||isinf(offset)||isnan(scale)||isinf(scale)){
+		Serial.println("Configuration is faulty");
+		while(true);
+	}
 	Offset = offset;
 	ScaleActuator = scale;
 	hwLocal = hwptr;

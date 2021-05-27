@@ -27,7 +27,7 @@ void setup() {
 		BLA::Matrix<4, 4> Result = BLA::Identity<4, 4>();
 		float R[3] = { j, j, j };
 		Result = Robot.FKofLimb(Result, R, 0);
-		PrintMatrix(Result, "Result");
+		//PrintMatrix(Result, "Result");
 
 		IKResult Error = Robot.MoveToTarget(0, 1000, Result);
 		if (Error == IKSuccess) {

@@ -66,7 +66,7 @@ void LewanSoulHardwareManager::Initialize() {
 void LewanSoulHardwareManager::SynchronizeMove(int milSec) {
 	for(int i = 0; i < num; i++){
 		float Value = ValMap[i];
-		Serial.println("Value of "+String(i)+" = "+String(Value));
+		Serial.println("Lewan Soul HW manager value of "+String(i)+" = "+String(Value));
 	motors[i]->move_time_and_wait_for_sync(Value, milSec);
 	}
 
