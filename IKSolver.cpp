@@ -22,7 +22,7 @@ IKResult IKSolver::IK(Matrix<4,4> &Target, float* Result, Link** links, int numb
 	if(numberOfLinks!=3)return NumberOfLinksError;
 	float x = Target(0,3);
 	float y = Target(1,3);
-	Serial.println(String(x)+":Xval  "+String(y)+":Yval  ");
+	//Serial.println(String(x)+":Xval  "+String(y)+":Yval  ");
 	float Link0Angle;
 
 	//Projection on Limb XY
@@ -30,7 +30,7 @@ IKResult IKSolver::IK(Matrix<4,4> &Target, float* Result, Link** links, int numb
 	if(x<0){return Quadrants2and3Unreachable;}
 	Link0Angle = atan2(y,x)+links[0]->DH_Theta;
 
-	Serial.println("Theta0: "+String(Link0Angle));
+	//Serial.println("Theta0: "+String(Link0Angle));
 
 	//Find link one angle in radians
 	Result[0] = Link0Angle*180/3.14159;

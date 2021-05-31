@@ -23,23 +23,22 @@ float LewanSoulHardwareManager::getCurrentValue(int Pin) {
 	return motors[Pin]->pos_read();
 }
 
-
 bool LewanSoulHardwareManager::isHardwareReady() {
 	if (!HardwareReady) {
 		Initialize();
 		if (digitalRead(0) == 0) {
 
-			for(int i = 0; i<num; i++){
-				Serial.println("Calibrating "+ String(i));
-				motors[i]->calibrate(startingAngles[i],lowerAngles[i],upperAngles[i]);
-				Serial.println("Calibrated "+ String(i));
+			for (int i = 0; i < num; i++) {
+				Serial.println("Calibrating " + String(i));
+				motors[i]->calibrate(startingAngles[i], lowerAngles[i],
+						upperAngles[i]);
+				Serial.println("Calibrated " + String(i));
 
-
-				int32_t pos = startingAngles[i]-motors[i]->pos_read();
-					if(abs(pos)>24){
-						Serial.println("Settling Error of"+String(pos));
-						return false;
-					}
+				int32_t pos = startingAngles[i] - motors[i]->pos_read();
+				if (abs(pos) > 24) {
+					Serial.println("Settling Error of" + String(pos));
+					return false;
+				}
 			}
 			HardwareReady = true;
 		}
@@ -49,7 +48,8 @@ bool LewanSoulHardwareManager::isHardwareReady() {
 
 void LewanSoulHardwareManager::Initialize() {
 
-	if(IsInitialized)return;
+	if (IsInitialized)
+		return;
 	pinMode(0, INPUT_PULLUP);
 	servoBus.beginOnePinMode(&Serial1, 15);
 	motors = new LX16AServo*[num];
@@ -60,14 +60,15 @@ void LewanSoulHardwareManager::Initialize() {
 	}
 	IsInitialized = true;
 
-
 }
 
 void LewanSoulHardwareManager::SynchronizeMove(int milSec) {
-	for(int i = 0; i < num; i++){
+	for (int i = 0; i < num; i++) {
 		float Value = ValMap[i];
-		Serial.println("Lewan Soul HW manager value of "+String(i)+" = "+String(Value));
-	motors[i]->move_time_and_wait_for_sync(Value, milSec);
+
+		//Serial.println("Lewan Soul HW manager value of "+String(i)+" = "+String(Value));
+
+		motors[i]->move_time_and_wait_for_sync(Value, milSec+5);
 	}
 
 	servoBus.move_sync_start();
@@ -77,6 +78,6 @@ void LewanSoulHardwareManager::SynchronizeMove(int milSec) {
 }
 
 bool LewanSoulHardwareManager::IsMoveDone() {
-	IsRunning = (millis()-StartTime > TimeToTake);
+	IsRunning = (millis() - StartTime > TimeToTake);
 	return IsRunning;
 }

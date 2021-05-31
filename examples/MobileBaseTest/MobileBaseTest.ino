@@ -23,17 +23,17 @@ void setup() {
 	// Open file for reading
 	Robot.parse();
 
-	for (float j = 0; j < 90; j += 5) {
+	for (float j = -100; j < 100; j += 3) {
 		BLA::Matrix<4, 4> Result = BLA::Identity<4, 4>();
-		float R[3] = { j, 0, 0 };
-		Result = Robot.FKofLimb(Result, R, 0);
-		//PrintMatrix(Result, "Result");
+		Result(1,3) =-j;
+		Result(0,3) = 100;
+		Result(2,3) = 195;
 
-		IKResult Error = Robot.MoveToTarget(0, 1000, Result);
+		IKResult Error = Robot.MoveToTarget(0, 10, Result);
 		if (Error == IKSuccess) {
 			while (!Robot.IsHWDone()) {
-				Serial.println("Moving Robot");
-				delay(100);
+				//Serial.println("Moving Robot");
+				//delay(100);
 			};
 		}else {PrintIKResult(Error);}
 	}

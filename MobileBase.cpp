@@ -118,14 +118,14 @@ IKResult MobileBase::IKofLimb(Matrix<4, 4> &Target, float *Result, int Index) {
 IKResult MobileBase::MoveToTarget(int limbIndex, int milliseconds,
 		Matrix<4, 4> &Target) {
 	int num = limbs[limbIndex]->GetNumberOfLinks();
-	Serial.println("MobileBase::MoveToTarget number of links "+String(num));
+	//Serial.println("MobileBase::MoveToTarget number of links "+String(num));
 	float JointValues[num];
 
 	IKResult Error = IKofLimb(Target, JointValues, limbIndex);
 
 	if (Error == IKSuccess) {
 		for (int i = 0; i < num && Error == IKSuccess; i++) {
-			Serial.println("MobileBase::MoveToTarget JointValue of"+String(i)+ "    "+ String(JointValues[i]));
+			//Serial.println("MobileBase::MoveToTarget JointValue of"+String(i)+ "    "+ String(JointValues[i]));
 			Error = limbs[limbIndex]->cacheValue(JointValues[i], i);
 		}
 		if (Error == IKSuccess) {

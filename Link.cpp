@@ -215,6 +215,6 @@ IKResult Link::cacheValue(float valueInDegrees){
 	float FinalVal =  (valueInDegrees/ScaleActuator)+Offset;
 	hwLocal->StoreValue(hardwarePin, FinalVal);
 
-	Serial.println("Limb.cacheValue FinalVal:" + String(FinalVal) + "valueInDegrees: " + String(valueInDegrees) + "  Scale Actuator: " + String(ScaleActuator) +   "Offset: " + String(Offset) + "  MinLink: " + String(MinLink) +"  MaxLink:" +String(MaxLink) );
+	//Serial.println("Link.cacheValue FinalVal:" + String(FinalVal) + "valueInDegrees: " + String(valueInDegrees) + "  Scale Actuator: " + String(ScaleActuator) +   "Offset: " + String(Offset) + "  MinLink: " + String(MinLink) +"  MaxLink:" +String(MaxLink) );
 	return IKSuccess;
 }

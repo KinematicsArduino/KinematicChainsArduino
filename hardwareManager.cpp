@@ -12,7 +12,7 @@
 
 	void hardwareManager::StoreValue(int Pin, float Target){
 		int HWMap = hardwareIndexMap[Pin];
-		Serial.println("PIN: " + String(Pin)+ "  HWMap:" +String(HWMap));
+		//Serial.println("PIN: " + String(Pin)+ "  HWMap:" +String(HWMap));
 		ValMap[HWMap] = Target;
 
 	}
