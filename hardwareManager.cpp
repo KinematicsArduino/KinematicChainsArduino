@@ -7,10 +7,14 @@
 
 #include <hardwareManager.h>
 #include<math.h>
+#include <Arduino.h>
 
 
 	void hardwareManager::StoreValue(int Pin, float Target){
-		ValMap[hardwareIndexMap[Pin]] = Target;
+		int HWMap = hardwareIndexMap[Pin];
+		Serial.println("PIN: " + String(Pin)+ "  HWMap:" +String(HWMap));
+		ValMap[HWMap] = Target;
+
 	}
 
 

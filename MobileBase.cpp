@@ -67,7 +67,7 @@ void parseStatic(MobileBase *MB) {
 			double DH_theta = doc.getMember(String(i) + "_DH_" + String(j))[3];
 
 			int PinNumber = doc.getMember(
-					String(i) + "HardwareManager" + String(j));
+					String(i) + "HardwareIndex" + String(j));
 			float offset = doc.getMember(String(i) + "Offset" + String(j));
 			float scale = doc.getMember(String(i) + "scale" + String(j));
 			Link *linkptr = new Link(j, DH_alpha, DH_d, DH_r, DH_theta,

@@ -212,6 +212,9 @@ Matrix<4, 4>& Link::computeStep(Matrix<4, 4> &poseT, float currAngle) {
 
 IKResult Link::cacheValue(float valueInDegrees){
 	if((valueInDegrees>MaxLink)||(valueInDegrees<MinLink)){return JointLimits;}
-	hwLocal->StoreValue(hardwarePin, (valueInDegrees/ScaleActuator)+Offset);
+	float FinalVal =  (valueInDegrees/ScaleActuator)+Offset;
+	hwLocal->StoreValue(hardwarePin, FinalVal);
+
+	Serial.println("Limb.cacheValue FinalVal:" + String(FinalVal) + "valueInDegrees: " + String(valueInDegrees) + "  Scale Actuator: " + String(ScaleActuator) +   "Offset: " + String(Offset) + "  MinLink: " + String(MinLink) +"  MaxLink:" +String(MaxLink) );
 	return IKSuccess;
 }

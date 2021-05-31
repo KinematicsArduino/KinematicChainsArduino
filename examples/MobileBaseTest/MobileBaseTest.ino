@@ -23,9 +23,9 @@ void setup() {
 	// Open file for reading
 	Robot.parse();
 
-	for (float j = -30; j < 30; j += 5) {
+	for (float j = 0; j < 90; j += 5) {
 		BLA::Matrix<4, 4> Result = BLA::Identity<4, 4>();
-		float R[3] = { j, j, j };
+		float R[3] = { j, 0, 0 };
 		Result = Robot.FKofLimb(Result, R, 0);
 		//PrintMatrix(Result, "Result");
 
