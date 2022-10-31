@@ -16,7 +16,10 @@ IKSolver::~IKSolver() {
 	// TODO Auto-generated destructor stub
 }
 
-
+// I suggest following the example laid out here for 6dof IK:
+// https://github.com/madhephaestus/6dofServoArm/blob/master/DefaultDhSolver.groovy
+// and from this Wrist Normalizer code: 
+// https://github.com/NeuronRobotics/java-bowler/blob/c2aedca8e378d76af4c7212b5759041a6a8c3753/src/main/java/com/neuronrobotics/sdk/addons/kinematics/WristNormalizer.java
 IKResult IKSolver::IK(Matrix<4,4> &Target, float* Result, Link** links, int numberOfLinks){
 	//PrintMatrix(Target, "_ Limb 0 IK");
 	if(numberOfLinks!=3)return NumberOfLinksError;
